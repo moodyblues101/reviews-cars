@@ -10,12 +10,12 @@ async function createUser(user) {
         createdAt
     ) VALUES (?, ?, ?, ?, ?, ?)
     `;
-  const { name, email, password, verificationCode } = user;
+  const { name, email, passwordHash, verificationCode } = user;
   const now = new Date();
   const [created] = await pool.query(sql, [
     name,
     email,
-    password,
+    passwordHash,
     verificationCode,
     "reader",
     now,

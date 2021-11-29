@@ -1,5 +1,6 @@
 "use strict";
 const createJsonError = require("../../errors/create-json-error");
+const throwJsonError = require("../../errors/throw-json-error");
 // REQUIRE funcion BD
 // Schema Joi
 

@@ -7,7 +7,7 @@ const throwJsonError = require("../../errors/throw-json-error");
 const { findUserByEmail } = require("../../repositories/users-repository");
 const schema = Joi.object().keys({
   username: Joi.string().email().required(),
-  password: Joi.string().min(4).max(20).required(),
+  password: Joi.string().min(4).max(200).required(),
 });
 
 async function loginUser(req, res) {
@@ -24,6 +24,7 @@ async function loginUser(req, res) {
       throwJsonError(403, "No existe un usuario con ese email y/o password");
     }
     const { id, name, role, password: passwordHash, verifiedAt } = user;
+
     const isValidPassword = await bcrypt.compare(password, passwordHash);
     if (!isValidPassword) {
       throwJsonError(403, "No existe un usuario con ese email y/o password");

@@ -17,7 +17,7 @@ async function findCarById(id) {
 
   // const sql2 = 'SELECT * FROM cars WHERE model = ? AND brand = ?';
   // await pool.query(sql, [model, brand]);s
-  return car;
+  return car[0];
 }
 
 module.exports = {

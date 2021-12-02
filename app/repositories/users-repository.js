@@ -29,11 +29,21 @@ async function createUser(user) {
 async function findUserByEmail(email) {
   const pool = await getPool();
   const sql =
-    "SELECT id, name, email, password, verifiedAt FROM users WHERE email = ?";
+    "SELECT id, name, email, password, role, verifiedAt FROM users WHERE email = ?";
   const [user] = await pool.query(sql, email);
 
   return user[0];
 }
+async function findUserById(id) {
+  const pool = await getPool();
+  const sql =
+    "SELECT id, name, email, image, role, createdAt FROM users WHERE id = ?";
+
+  const [user] = await pool.query(sql, id);
+
+  return user[0];
+}
+
 async function activateUser(verificationCode) {
   const now = new Date();
   const pool = await getPool();
@@ -56,10 +66,37 @@ async function getUserByVerificationCode(code) {
 
   return user[0];
 }
+async function findAllUsers() {
+  const pool = await getPool();
+  const sql = "SELECT id, name, email, verifiedAt FROM users";
+  const [users] = await pool.query(sql);
+
+  return users;
+}
+
+async function removeUserById(id) {
+  const pool = await getPool();
+  const sql = "DELETE FORM users WHERE id = ?";
+  await pool.query(sql, id);
+
+  return true;
+}
+
+async function uploadUserImage(id, image) {
+  const pool = await getPool();
+  const sql = "UPDATE users SET image = ? WHERE id = ?";
+  await pool.query(sql, [image, id]);
+
+  return true;
+}
+
 module.exports = {
   createUser,
   findUserByEmail,
+  findUserById,
   activateUser,
   getUserByVerificationCode,
-  // updateUser,
+  findAllUsers,
+  removeUserById,
+  uploadUserImage,
 };

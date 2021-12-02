@@ -1,4 +1,5 @@
 "use strict";
+const Joi = require("joi");
 const createJsonError = require("../../errors/create-json-error");
 const throwJsonError = require("../../errors/throw-json-error");
 // REQUIRE funcion BD
